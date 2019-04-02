@@ -5,6 +5,10 @@
  * выполнение и вернуть undefined.
  */
 
-export default function sleep() {
-  // your code here
+export default function sleep(seconds) {
+  if (!Number.isInteger(seconds)) { return }
+  const start = Date.now()
+  while (Date.now() < start + seconds * 1000) {
+    // wait
+  }
 }
