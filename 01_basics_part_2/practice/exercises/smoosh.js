@@ -15,29 +15,29 @@
  * с сообщением 'argument should be an array'.
  */
 
-function smoosh(array) {
-  const result = []
-  if (!Array.isArray(array)) { return 'argument should be an array' }
-  (function monster(arg) {
-    arg.forEach((item) => {
-      if (Array.isArray(item)) { monster(item) }
-      else { result.push(item) }
+function smoosh(input) {
+  if (!Array.isArray(input)) { return 'argument should be an array' }
+  const resArray = [];
+  (function noMutation(argument) {
+    argument.forEach((item) => {
+      if (Array.isArray(item)) { noMutation(item) }
+      else { resArray.push(item) }
     })
-  })(array)
-  return result
+  }(input));
+  return resArray
 }
 
-function squeeze(array) {
-  const length = array.length
-  if (!Array.isArray(array)) { return 'argument should be an array' }
-  (function monster(arg) {
-    arg.forEach((item) => {
-      if (Array.isArray(item)) { monster(item) }
-      else { array.push(item) }
+function squeeze(input) {
+  if (!Array.isArray(input)) { return 'argument should be an array' }
+  const length = input.length;
+  (function mutation(argument) {
+    argument.forEach((item) => {
+      if (Array.isArray(item)) { mutation(item) }
+      else { input.push(item) }
     })
-  })(array)
-  array.splice(0, length)
-  return array
+  }(input));
+  input.splice(0, length);//orginal array
+  return input
 }
 
 export { smoosh, squeeze };
