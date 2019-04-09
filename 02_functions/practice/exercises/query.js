@@ -81,6 +81,95 @@
  * 3. Реализовать функциональность создания INSERT и DELETE запросов. Написать для них тесты.
  */
 
-export default function query() {
+export default function query(tableName) {
   // ¯\_(ツ)_/¯
+  const result = {
+    flags: {
+      select: false,
+      from: true,
+      where: false,
+      orWhere: false,
+      not: false
+    }
+  }
+  const WHERE_METHODS = {
+    equals: (value) => {
+      if (result.flags.not) {
+        result.query = result.query.replace(/WHERE/g, 'WHERE NOT')
+      }
+      result.query += ` = ${value}`
+      return WHERE_METHODS
+    },
+    in: (...values) => {
+      const valuseWithSpace = values.toString().split(',').join(', ')
+      result.query += (result.flags.not) ? ` NOT IN(${valuseWithSpace})` : ` IN (${valuseWithSpace})`
+      return WHERE_METHODS
+    },
+    gt: (value) => {
+      result.query += ` > ${value}`
+      return WHERE_METHODS
+    },
+    gte: (value) => {
+      result.query += ` >= ${value}`
+      return WHERE_METHODS
+    },
+    lt: (value) => {
+      result.query += ` < ${value}`
+      return WHERE_METHODS
+    },
+    lte: (value) => {
+      result.query += ` <= ${value}`
+      return WHERE_METHODS
+    },
+    between: (from, to) => {
+      result.query += ` BETWEEN ${from} AND ${to}`
+      return WHERE_METHODS
+    },
+    isNull: () => {
+      result.query += (result.flags.not) ? ` IS NOT NULL` : ` IS NULL`
+      return WHERE_METHODS
+    },
+    not: () => {
+      if (!result.flags.where) { return new Error(`not() can't be called before where`) }
+      else if (result.flags.not) { return new Error(`not() can't be called multiple times in a row`) }
+      else {
+        result.flags.not = true
+        return WHERE_METHODS
+      }
+    },
+    where: (fieldName) => {
+      result.query += (result.flags.where) ? ` AND ${fieldName}` : ` WHERE ${fieldName}`
+      result.flags.where = true
+      return WHERE_METHODS
+    },
+    orWhere: (fieldName) => {
+      result.query += (result.flags.where) ? ` OR ${fieldName}` : ` WHERE ${fieldName}`
+      result.flags.where = true
+      return WHERE_METHODS
+    },
+    toString: () => {
+      result.query += `;`
+      return result.query
+    }
+  }
+  const QUERY_METHODS = {
+    select: (...args) => {
+      result.query = (args.length === 0) ? `SELECT *` : `SELECT ${args}`
+      result.flags.select = true
+      return QUERY_METHODS
+    },
+    from: (tableName) => {
+      if (!result.flags.from) {
+        result.query += ` FROM ${tableName}`
+        result.flags.from = true
+      }
+      return QUERY_METHODS
+    },
+    not: WHERE_METHODS.not,
+    where: WHERE_METHODS.where,
+    orWhere: WHERE_METHODS.orWhere,
+    toString: WHERE_METHODS.toString
+  }
+  if (!tableName) { result.flags.from = false }//check arg for query()
+  return QUERY_METHODS
 }
