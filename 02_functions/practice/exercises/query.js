@@ -108,22 +108,22 @@ export default function query(tableName) {
     },
     gt: (value) => {
       if (typeof value === 'number') { result.query += ` = ${value}` }
-      else { result.query += ` = '${value}'` }
+      else { result.query += ` > '${value}'` }
       return WHERE_METHODS
     },
     gte: (value) => {
       if (typeof value === 'number') { result.query += ` = ${value}` }
-      else { result.query += ` = '${value}'` }
+      else { result.query += ` >= '${value}'` }
       return WHERE_METHODS
     },
     lt: (value) => {
       if (typeof value === 'number') { result.query += ` = ${value}` }
-      else { result.query += ` = '${value}'` }
+      else { result.query += ` < '${value}'` }
       return WHERE_METHODS
     },
     lte: (value) => {
       if (typeof value === 'number') { result.query += ` = ${value}` }
-      else { result.query += ` = '${value}'` }
+      else { result.query += ` <= '${value}'` }
       return WHERE_METHODS
     },
     between: (from, to) => {
