@@ -97,7 +97,8 @@ export default function query(tableName) {
       if (result.flags.not) {
         result.query = result.query.replace(/WHERE/g, 'WHERE NOT')
       }
-      result.query += ` = ${value}`
+      if (typeof value === 'number') { result.query += ` = ${value}` }
+      else { result.query += ` = '${value}'` }
       return WHERE_METHODS
     },
     in: (...values) => {
@@ -106,19 +107,23 @@ export default function query(tableName) {
       return WHERE_METHODS
     },
     gt: (value) => {
-      result.query += ` > ${value}`
+      if (typeof value === 'number') { result.query += ` = ${value}` }
+      else { result.query += ` = '${value}'` }
       return WHERE_METHODS
     },
     gte: (value) => {
-      result.query += ` >= ${value}`
+      if (typeof value === 'number') { result.query += ` = ${value}` }
+      else { result.query += ` = '${value}'` }
       return WHERE_METHODS
     },
     lt: (value) => {
-      result.query += ` < ${value}`
+      if (typeof value === 'number') { result.query += ` = ${value}` }
+      else { result.query += ` = '${value}'` }
       return WHERE_METHODS
     },
     lte: (value) => {
-      result.query += ` <= ${value}`
+      if (typeof value === 'number') { result.query += ` = ${value}` }
+      else { result.query += ` = '${value}'` }
       return WHERE_METHODS
     },
     between: (from, to) => {
@@ -138,27 +143,35 @@ export default function query(tableName) {
       }
     },
     where: (fieldName) => {
+      if (typeof fieldName !== 'string') { return new Error('argument is not a string') }
       result.query += (result.flags.where) ? ` AND ${fieldName}` : ` WHERE ${fieldName}`
       result.flags.where = true
       return WHERE_METHODS
     },
     orWhere: (fieldName) => {
+      if (typeof fieldName !== 'string') { return new Error('argument is not a string') }
       result.query += (result.flags.where) ? ` OR ${fieldName}` : ` WHERE ${fieldName}`
       result.flags.where = true
       return WHERE_METHODS
     },
     toString: () => {
-      result.query += `;`
+      if (result.query.indexOf(';') > 0) {
+        result.query = result.query.replace(/;/g, '')
+        result.query += ';'
+      }
+      else { result.query += `;` }
       return result.query
     }
   }
   const QUERY_METHODS = {
     select: (...args) => {
+      result.flags.where = false
       result.query = (args.length === 0) ? `SELECT *` : `SELECT ${args}`
       result.flags.select = true
       return QUERY_METHODS
     },
     from: (tableName) => {
+      if (typeof tableName !== 'string') { return new Error('argument is not a string') }
       if (!result.flags.from) {
         result.query += ` FROM ${tableName}`
         result.flags.from = true
