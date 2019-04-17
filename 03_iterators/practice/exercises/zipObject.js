@@ -10,7 +10,7 @@
  *  zipObject(['a', 'b'], [1, 2]);
  *  // => { 'a': 1, 'b': 2 }
  */
-export default function zipObject(keys) {
+export default function zipObject(keys, values) {
   let index = 0
   let result = {}
   while (index < keys.length) {
