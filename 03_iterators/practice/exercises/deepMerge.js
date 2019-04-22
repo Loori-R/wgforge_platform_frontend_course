@@ -26,6 +26,22 @@
  * //       count: 1
  * //    }
  */
+function helper(inputObj, outputObject) {
+  Object.entries(inputObj).forEach(element => {
+    const key = element[0]
+    const val = element[1]
+    if (outputObject[key] && Array.isArray(val)) {
+      for (let i in val) {
+        outputObject[key][i] = deepMerge(outputObject[key][i], val[i])
+      }
+    } else if (!outputObject[key]) { outputObject[key] = val }
+  })
+}
+
 export default function deepMerge(destinationObject, sourceObject) {
   // ¯\_(ツ)_/¯
+  const res = {}
+  helper(destinationObject, res)
+  helper(sourceObject, res)
+  return res
 }
