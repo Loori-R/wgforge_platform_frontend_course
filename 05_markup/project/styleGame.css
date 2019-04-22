@@ -5,6 +5,8 @@
 }
 
 body {
+    width: 99vw;
+    overflow-x: hidden;
     background: url("img/grass.webp"), url("img/grass.webp") repeat 150px 200px, url("img/grass.webp") repeat 50px 100px;
     position: absolute;
     top: 0;
@@ -136,7 +138,8 @@ body {
         background: url("img/s1-tanks.webp") no-repeat center center, url("img/s1-rock-left.webp") no-repeat left 400px, url("img/s1-rock-right.webp") no-repeat right 200px;
     }
     .article:nth-child(2) {
-        background: url("img/s2-tank.webp") no-repeat -1005px bottom, url("img/s2-tank.webp") no-repeat 400px bottom, url("img/s2-tank-remote.webp") no-repeat center 50%;
+        transition-timing-function: linear;
+        background: url("img/s2-tank.webp") no-repeat 100% bottom, url("img/s2-tank-remote.webp") no-repeat 89% 50%;
     }
     .article:nth-child(3) {
         background: url("img/s3-hill.webp") no-repeat 0 100%, url("img/s3-sky.webp") repeat center center;

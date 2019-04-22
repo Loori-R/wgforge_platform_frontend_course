@@ -4,6 +4,8 @@
 }
 
 body {
+    width: 99vw;
+    overflow-x: hidden;
     margin: 0;
     position: relative;
 }
@@ -231,12 +233,27 @@ body {
         text-align: center;
         margin-top: -60px;
     }
-    .section__tank::after {
-        content: '';
-        transform: rotate(30deg);
-        background: url(img/turret.webp) no-repeat center 385px, url(img/turret-shadow.webp) no-repeat 180px 415px;
+    .section__turret {
+        transition: 1s linear;
+        transform-origin: 50% 80% 0;
+        position: absolute;
+        width: 200px;
+        height: 100%;
+        background: url(img/turret.webp) no-repeat center 140px, url(img/turret-shadow.webp) no-repeat 50px 220px;
+    }
+    .section__turret__center {
+        transform: rotate(0deg)
+    }
+    .section__turret__right {
+        transform: rotate(55deg)
+    }
+    .section__turret__left {
+        transform: rotate(-55deg)
     }
     .section__tank {
-        background: url(img/turret.webp) no-repeat center 385px, url(img/turret-shadow.webp) no-repeat 180px 415px, url(img/tank.webp) no-repeat center 500px;
+        position: absolute;
+        width: 300px;
+        height: 100%;
+        background: url(img/tank.webp) no-repeat center 250px;
     }
 }
