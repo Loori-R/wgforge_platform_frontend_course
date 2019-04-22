@@ -1,0 +1,151 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans Condensed';
+}
+
+body {
+    background: url("img/grass.webp"), url("img/grass.webp") repeat 150px 200px, url("img/grass.webp") repeat 50px 100px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+.header {
+    height: 60px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.main-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    height: 60px;
+    list-style-type: none;
+    text-transform: uppercase;
+}
+
+.main-nav a {
+    font-size: 24px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.search {
+    display: none;
+}
+
+.main-button {
+    display: none;
+}
+
+.page-nav {
+    display: none;
+}
+
+.section__open .article {
+    display: block;
+}
+
+.footer {
+    display: none;
+}
+
+.invisible {
+    color: transparent;
+    font: 0/0 a;
+}
+
+.main {
+    box-sizing: border-box;
+    display: grid;
+    padding-top: 60px;
+    position: relative;
+    min-height: 100vh;
+}
+
+.section {
+    display: grid;
+    grid-template-rows: repeat(3, minmax(525px, auto));
+    justify-content: center;
+    color: #fff;
+}
+
+.article__content {
+    width: 260px;
+    margin: auto;
+}
+
+.article {
+    width: 100vw;
+}
+
+.article:nth-child(1) {
+    background: url("img/s1-tanks_res.webp") no-repeat center center;
+}
+
+.article:nth-child(2) {
+    background: url("img/s2-tank-remote_res.webp") no-repeat center 50%, url("img/s2-tank.webp") no-repeat -1405px 0, url("img/s2-tank_res.webp") no-repeat 40px 100%;
+}
+
+.article:nth-child(3) {
+    background: url("img/s3-hill_res.webp") no-repeat 0 100%, url("img/s3-sky.webp") repeat center center;
+}
+
+.article h3 {
+    font-size: 36px;
+    text-transform: uppercase;
+}
+
+.intro {
+    font-size: 16px;
+    font-family: "Open Sans Condensed";
+    color: rgb(255, 255, 255);
+    line-height: 1.5;
+    text-align: left;
+}
+
+@media all and (min-width: 760px) {
+    .main {
+        box-sizing: border-box;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        padding-top: 60px;
+        position: relative;
+        min-height: 100vh;
+        grid-gap: 20px;
+    }
+    .section {
+        display: grid;
+        grid-template-rows: repeat(3, minmax(725px, auto));
+        justify-content: center;
+        color: #fff;
+    }
+    .article__content {
+        width: 750px;
+        margin: auto;
+    }
+    .article {
+        width: 100vw;
+    }
+    .article:nth-child(1) {
+        background: url("img/s1-tanks.webp") no-repeat center center, url("img/s1-rock-left.webp") no-repeat left 400px, url("img/s1-rock-right.webp") no-repeat right 200px;
+    }
+    .article:nth-child(2) {
+        background: url("img/s2-tank.webp") no-repeat -1005px bottom, url("img/s2-tank.webp") no-repeat 400px bottom, url("img/s2-tank-remote.webp") no-repeat center 50%;
+    }
+    .article:nth-child(3) {
+        background: url("img/s3-hill.webp") no-repeat 0 100%, url("img/s3-sky.webp") repeat center center;
+    }
+    .article h3 {
+        font-size: 46px;
+    }
+    .intro {
+        font-size: 21px;
+        columns: 2
+    }
+}
