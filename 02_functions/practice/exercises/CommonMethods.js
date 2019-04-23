@@ -19,7 +19,7 @@ export default class Common_Methods {
 
     where(fieldName) {
         if (typeof fieldName !== 'string') {
-            return 'arguments not be string'
+            return new TypeError('arguments not be string')
         } else if (this.getQueryResult.where) {
             this.getQueryResult.where.push(['AND', fieldName])
         } else {
@@ -28,7 +28,7 @@ export default class Common_Methods {
     }
     orWhere(fieldName) {
         if (typeof fieldName !== 'string') {
-            return 'arguments not be string'
+            return new TypeError('arguments not be string')
         } else if (this.getQueryResult.where) {
             this.getQueryResult.where.push(['OR', fieldName])
         } else {

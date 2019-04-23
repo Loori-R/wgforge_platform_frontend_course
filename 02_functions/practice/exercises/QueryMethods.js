@@ -14,7 +14,7 @@ export class Query_Methods extends Common_Methods {
                 super.setQueryResult('select', '*')
                 return this
             } else if (args.some(elem => typeof elem !== 'string')) {
-                return 'arguments not be string'
+                return new TypeError('arguments not be string')
             } else {
                 super.setQueryResult('select', ...args)
                 return this
@@ -26,7 +26,7 @@ export class Query_Methods extends Common_Methods {
                 return this
             } //property exists
             else if (typeof tableName !== 'string') {
-                return 'arguments not be string'
+                return new TypeError('arguments not be string')
             } else {
                 super.setQueryResult('from', tableName)
                 return this

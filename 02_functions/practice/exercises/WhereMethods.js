@@ -12,7 +12,7 @@ export class Where_Methods extends Common_Methods {
 
         this.in = (values) => {
             if (!Array.isArray(values)) {
-                return 'arguments not be array'
+                return new TypeError('arguments not be array')
             } else {
                 values = this.arrayToStringEscape(values)
             }
@@ -58,7 +58,7 @@ export class Where_Methods extends Common_Methods {
 
         this.not = () => {
             if (super.getQueryResult.notCheck === 'off') {
-                return "not() can't be called multiple times in a row"
+                return new SyntaxError("not() can't be called multiple times in a row")
             } else {
                 super.setQueryResult('notCheck', 'off')
                 this.setQueryWhere('not')
@@ -100,7 +100,7 @@ export class Where_Methods extends Common_Methods {
 
     where(fieldName) {
         if (super.getQueryResult.notCheck === 'off') {
-            return "After calling not(), you can only call the same methods that uses where to compare."
+            return new SyntaxError("After calling not(), you can only call the same methods that uses where to compare.")
         }
         super.where(fieldName)
         return this
