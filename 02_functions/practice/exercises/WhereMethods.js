@@ -11,8 +11,11 @@ export class Where_Methods extends Common_Methods {
         }
 
         this.in = (values) => {
-            if (!Array.isArray(values)) { return 'arguments not be array' }
-            else { values = this.arrayToStringEscape(values) }
+            if (!Array.isArray(values)) {
+                return 'arguments not be array'
+            } else {
+                values = this.arrayToStringEscape(values)
+            }
             this.setQueryWhere('in', values)
             return this
         }
@@ -38,8 +41,12 @@ export class Where_Methods extends Common_Methods {
         }
 
         this.between = (from, to) => {
-            if (typeof from !== 'number') { from = `'${from}'` }
-            if (typeof to !== 'number') { to = `'${to}'` }
+            if (typeof from !== 'number') {
+                from = `'${from}'`
+            }
+            if (typeof to !== 'number') {
+                to = `'${to}'`
+            }
             this.setQueryWhere('between', `${from} AND ${to}`)
             return this
         }
@@ -52,8 +59,7 @@ export class Where_Methods extends Common_Methods {
         this.not = () => {
             if (super.getQueryResult.notCheck === 'off') {
                 return "not() can't be called multiple times in a row"
-            }
-            else {
+            } else {
                 super.setQueryResult('notCheck', 'off')
                 this.setQueryWhere('not')
                 return this
@@ -61,25 +67,33 @@ export class Where_Methods extends Common_Methods {
         }
 
     }
+    //end constructor
+
     setQueryWhere(key, value) {
         const whereCount = super.getQueryResult.where.length - 1
         if (key !== 'not') {
             super.setQueryResult('notCheck', 'on')
             super.getQueryResult.where[whereCount].push(key, value)
+        } else {
+            super.getQueryResult.where[whereCount].push(key)
         }
-        else { super.getQueryResult.where[whereCount].push(key) }
     }
 
     checkTypeAndSet(key, value) {
-        if (typeof value !== 'number') { value = `'${value}'` }
+        if (typeof value !== 'number') {
+            value = `'${value}'`
+        }
         this.setQueryWhere(key, value)
     }
 
     arrayToStringEscape(array) {
         //[1,"2",3,"4"] => 1,<space>"\"2\"",<space>3,<space>"\"4\""
         const noSpace = array.map(item => {
-            if (typeof item === 'string') { return `'${item}'` }
-            else { return item }
+            if (typeof item === 'string') {
+                return `'${item}'`
+            } else {
+                return item
+            }
         })
         return noSpace.join(', ')
     }

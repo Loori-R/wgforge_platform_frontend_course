@@ -81,9 +81,14 @@
  * 3. Реализовать функциональность создания INSERT и DELETE запросов. Написать для них тесты.
  */
 
-import { Query_Methods } from './QueryMethods'
+import {
+    Query_Methods
+} from './QueryMethods'
+
 export default function query(tableName) {
-  // ¯\_(ツ)_/¯
-  const queryFull = { from: tableName }
-  return new Query_Methods(queryFull)
+    // ¯\_(ツ)_/¯
+    const queryFull = {
+        from: tableName
+    }
+    return new Query_Methods(queryFull)
 }
