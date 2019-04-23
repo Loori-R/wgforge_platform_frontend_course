@@ -12,35 +12,32 @@ export class Query_Methods extends Common_Methods {
             queryFull = queryFull
             if (args.length === 0) {
                 super.setQueryResult('select', '*')
-                return this
             } else if (args.some(elem => typeof elem !== 'string')) {
                 return new TypeError('arguments not be string')
             } else {
                 super.setQueryResult('select', ...args)
-                return this
             }
+
+            return this
         }
 
         this.from = (tableName) => {
-            if (super.getQueryResult.from) {
-                return this
-            } //property exists
-            else if (typeof tableName !== 'string') {
-                return new TypeError('arguments not be string')
-            } else {
+            if (!super.getQueryResult.from) {
                 super.setQueryResult('from', tableName)
-                return this
+            } else if (typeof tableName !== 'string') {
+                return new TypeError('arguments not be string')
             }
+
+            return this
         }
 
         this.where = (fieldName) => {
             /*  "if/else" for tests of WHERE_METHODS  */
-            if (!this.getQueryResult.select) {
-                return new Where_Methods(queryFull)
-            } else {
+            if (this.getQueryResult.select) {
                 super.where(fieldName)
-                return new Where_Methods(queryFull)
             }
+
+            return new Where_Methods(queryFull)
         }
 
         this.orWhere = (fieldName) => {
