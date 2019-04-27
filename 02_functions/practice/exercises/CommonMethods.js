@@ -9,39 +9,47 @@ export default class Common_Methods {
         return this[_queryFullInfo]
     }
 
-    setQueryResult(key, value, index) {
-        if (index && this[_queryFullInfo][key]) {
-            this[_queryFullInfo][key][index] = value
-        } else {
-            this[_queryFullInfo][key] = [value]
-        }
+    setQueryResult(key, value) {
+        this[_queryFullInfo][key] = [value]
     }
 
     where(fieldName) {
         if (typeof fieldName !== 'string') {
             throw new TypeError('arguments not be string')
         } else if (this.getQueryResult.where) {
-            this.getQueryResult.where.push(['AND', fieldName])
+            this.getQueryResult.where.push({
+                whereOrAnd: 'AND',
+                fieldName: fieldName
+            })
         } else {
-            this.setQueryResult('where', ['WHERE', fieldName])
+            this.setQueryResult('where', {
+                whereOrAnd: 'WHERE',
+                fieldName: fieldName
+            })
         }
     }
     orWhere(fieldName) {
         if (typeof fieldName !== 'string') {
             throw new TypeError('arguments not be string')
         } else if (this.getQueryResult.where) {
-            this.getQueryResult.where.push(['OR', fieldName])
+            this.getQueryResult.where.push({
+                whereOrAnd: 'OR',
+                fieldName: fieldName
+            })
         } else {
-            this.setQueryResult('where', ['WHERE', fieldName])
+            this.setQueryResult('where', {
+                whereOrAnd: 'WHERE',
+                fieldName: fieldName
+            })
         }
     }
 
-    whereMethodsToString(array) {
-        const whereOrAnd = array[0]
-        const fieldName = array[1]
-        const not = (array[2] === 'not') ? ' NOT' : ''
-        const method = (array[2] === 'not') ? array[3] : array[2]
-        const methodValue = array[array.length - 1]
+    whereMethodsToString(obj) {
+        const whereOrAnd = obj.whereOrAnd
+        const fieldName = obj.fieldName
+        const not = (obj.not) ? ' NOT' : ''
+        const method = obj.method
+        const methodValue = obj.methodValue
 
         switch (method) {
             case 'equals':

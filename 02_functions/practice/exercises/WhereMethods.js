@@ -63,7 +63,7 @@ export class Where_Methods extends Common_Methods {
             }
 
             super.setQueryResult('notCheck', 'off')
-            this.setQueryWhere('not')
+            this.setQueryWhere('not', true)
             return this
         }
 
@@ -73,12 +73,14 @@ export class Where_Methods extends Common_Methods {
     setQueryWhere(key, value) {
         const whereCount = super.getQueryResult.where.length - 1
 
-        if (key !== 'not') {
+        if (key == 'not') {
             super.setQueryResult('notCheck', 'on')
-            super.getQueryResult.where[whereCount].push(key, value)
+            super.getQueryResult.where[whereCount][key] = value
         } else {
-            super.getQueryResult.where[whereCount].push(key)
+            super.getQueryResult.where[whereCount].method = key
+            super.getQueryResult.where[whereCount].methodValue = value
         }
+
     }
 
     checkTypeAndSet(key, value) {
