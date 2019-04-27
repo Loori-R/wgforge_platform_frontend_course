@@ -2,73 +2,68 @@ import Common_Methods from './CommonMethods'
 
 //'equals', 'in', 'gt', 'gte', 'lt', 'lte', 'between', 'isNull', 'not'
 export class Where_Methods extends Common_Methods {
-    constructor(queryFull) {
-        super(queryFull)
 
-        this.equals = (value) => {
-            this.checkTypeAndSet('equals', value)
-            return this
-        }
-
-        this.in = (values) => {
-            if (!Array.isArray(values)) {
-                throw new TypeError('arguments not be array')
-            }
-
-            values = this.arrayToStringEscape(values)
-            this.setQueryWhere('in', values)
-            return this
-        }
-
-        this.gt = (value) => {
-            this.checkTypeAndSet('gt', value)
-            return this
-        }
-
-        this.gte = (value) => {
-            this.checkTypeAndSet('gte', value)
-            return this
-        }
-
-        this.lt = (value) => {
-            this.checkTypeAndSet('lt', value)
-            return this
-        }
-
-        this.lte = (value) => {
-            this.checkTypeAndSet('lte', value)
-            return this
-        }
-
-        this.between = (from, to) => {
-            if (typeof from !== 'number') {
-                from = `'${from}'`
-            }
-            if (typeof to !== 'number') {
-                to = `'${to}'`
-            }
-
-            this.setQueryWhere('between', `${from} AND ${to}`)
-            return this
-        }
-
-        this.isNull = () => {
-            this.setQueryWhere('isNull', true)
-            return this
-        }
-
-        this.not = () => {
-            if (super.getQueryResult.notCheck === 'off') {
-                throw new SyntaxError("not() can't be called multiple times in a row")
-            }
-
-            super.setQueryResult('notCheck', 'off')
-            this.setQueryWhere('not', true)
-            return this
-        }
-
+    equals(value) {
+        this.checkTypeAndSet('equals', value)
+        return this
     }
-    //end constructor
+
+    in(values) {
+        if (!Array.isArray(values)) {
+            throw new TypeError('arguments not be array')
+        }
+
+        values = this.arrayToStringEscape(values)
+        this.setQueryWhere('in', values)
+        return this
+    }
+
+    gt(value) {
+        this.checkTypeAndSet('gt', value)
+        return this
+    }
+
+    gte(value) {
+        this.checkTypeAndSet('gte', value)
+        return this
+    }
+
+    lt(value) {
+        this.checkTypeAndSet('lt', value)
+        return this
+    }
+
+    lte(value) {
+        this.checkTypeAndSet('lte', value)
+        return this
+    }
+
+    between(from, to) {
+        if (typeof from !== 'number') {
+            from = `'${from}'`
+        }
+        if (typeof to !== 'number') {
+            to = `'${to}'`
+        }
+
+        this.setQueryWhere('between', `${from} AND ${to}`)
+        return this
+    }
+
+    isNull() {
+        this.setQueryWhere('isNull', true)
+        return this
+    }
+
+    not() {
+        if (super.getQueryResult.notCheck === 'off') {
+            throw new SyntaxError("not() can't be called multiple times in a row")
+        }
+
+        super.setQueryResult('notCheck', 'off')
+        this.setQueryWhere('not', true)
+        return this
+    }
 
     setQueryWhere(key, value) {
         const whereCount = super.getQueryResult.where.length - 1

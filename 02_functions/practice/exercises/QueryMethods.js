@@ -5,48 +5,40 @@ import {
 
 //'select', 'from', 'where', 'orWhere', 'toString'
 export class Query_Methods extends Common_Methods {
-    constructor(queryFull) {
-        super(queryFull)
 
-        this.select = (...args) => {
-            queryFull = queryFull
-            if (args.length === 0) {
-                super.setQueryResult('select', '*')
-            } else if (args.some(elem => typeof elem !== 'string')) {
-                throw new TypeError('arguments not be string')
-            } else {
-                super.setQueryResult('select', ...args)
-            }
-
-            return this
+    select(...args) {
+        if (args.length === 0) {
+            super.setQueryResult('select', '*')
+        } else if (args.some(elem => typeof elem !== 'string')) {
+            throw new TypeError('arguments not be string')
+        } else {
+            super.setQueryResult('select', ...args)
         }
 
-        this.from = (tableName) => {
-            if (!super.getQueryResult.from) {
-                super.setQueryResult('from', tableName)
-            } else if (typeof tableName !== 'string') {
-                throw new TypeError('arguments not be string')
-            }
+        return this
+    }
 
-            return this
+    from(tableName) {
+        if (!super.getQueryResult.from) {
+            super.setQueryResult('from', tableName)
+        } else if (typeof tableName !== 'string') {
+            throw new TypeError('arguments not be string')
         }
 
-        this.where = (fieldName) => {
-            /*  "if/else" for tests of WHERE_METHODS  */
-            if (this.getQueryResult.select) {
-                super.where(fieldName)
-            }
+        return this
+    }
 
-            return new Where_Methods(queryFull)
+    where(fieldName) {
+        /*  "if/else" for tests of WHERE_METHODS  */
+        if (super.getQueryResult.select) {
+            super.where(fieldName)
         }
 
-        this.orWhere = (fieldName) => {
-            super.orWhere(fieldName)
-            return new Where_Methods(queryFull)
-        }
+        return new Where_Methods(super.getQueryResult)
+    }
 
-        this.toString = () => {
-            return super.toString()
-        }
+    orWhere(fieldName) {
+        super.orWhere(fieldName)
+        return new Where_Methods(super.getQueryResult)
     }
 }
