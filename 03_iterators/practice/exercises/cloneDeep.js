@@ -7,7 +7,9 @@ export default function cloneDeep(sourceObject) {
   const res = {}
 
   Object.keys(sourceObject).forEach(key => {
-    if (typeof sourceObject[key] === 'object') { res[key] = cloneDeep(sourceObject[key]) }
+    if (typeof sourceObject[key] === 'object') {
+      res[key] = cloneDeep(sourceObject[key])
+    }
     else { res[key] = sourceObject[key] }
   })
 
