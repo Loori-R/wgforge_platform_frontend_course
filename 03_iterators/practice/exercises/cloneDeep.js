@@ -4,15 +4,12 @@
 export default function cloneDeep(sourceObject) {
   // ¯\_(ツ)_/¯
   //sourceObject is array or object?
-  const res = (Array.isArray(sourceObject)) ? [] : {}
-  for (let i in sourceObject) {
-    const item = sourceObject[i]
-    if (Array.isArray(item) || typeof item === 'object') {
-      res[i] = cloneDeep(item)
-    }
-    else {
-      res[i] = item
-    }
-  }
+  const res = {}
+
+  Object.keys(sourceObject).forEach(key => {
+    if (typeof sourceObject[key] === 'object') { res[key] = cloneDeep(sourceObject[key]) }
+    else { res[key] = sourceObject[key] }
+  })
+
   return res
 }
