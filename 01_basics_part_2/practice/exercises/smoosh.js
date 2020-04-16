@@ -15,12 +15,29 @@
  * с сообщением 'argument should be an array'.
  */
 
-function smoosh() {
-  // your code here
+function smoosh(input) {
+  if (!Array.isArray(input)) { return 'argument should be an array' }
+  const resArray = [];
+  (function noMutation(argument) {
+    argument.forEach((item) => {
+      if (Array.isArray(item)) { noMutation(item) }
+      else { resArray.push(item) }
+    })
+  }(input));
+  return resArray
 }
 
-function squeeze() {
-  // your code here
+function squeeze(input) {
+  if (!Array.isArray(input)) { return 'argument should be an array' }
+  const length = input.length;
+  (function mutation(argument) {
+    argument.forEach((item) => {
+      if (Array.isArray(item)) { mutation(item) }
+      else { input.push(item) }
+    })
+  }(input));
+  input.splice(0, length);//orginal array
+  return input
 }
 
 export { smoosh, squeeze };
