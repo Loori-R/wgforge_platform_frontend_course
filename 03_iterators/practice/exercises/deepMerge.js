@@ -28,4 +28,17 @@
  */
 export default function deepMerge(destinationObject, sourceObject) {
   // ¯\_(ツ)_/¯
+  Object.entries(destinationObject).forEach(element => {
+    const key = element[0]
+    const val = element[1]
+
+    if (sourceObject[key] && Array.isArray(val)) {
+      for (let i in val) {
+        sourceObject[key][i] = deepMerge(sourceObject[key][i], val[i])
+      }
+
+    } else if (!sourceObject[key]) { sourceObject[key] = val }
+  })
+
+  return destinationObject
 }
